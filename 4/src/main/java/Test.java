@@ -17,8 +17,8 @@ public class Test {
 
 @Slf4j
 class Number {
-    public static synchronized void a() { //锁的是类对象1
-        log.debug("1");
+    public static synchronized void a() { //锁的是类对象
+        log.debug("1" );
     }
 
     public synchronized void b() {
