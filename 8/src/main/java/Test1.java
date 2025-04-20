@@ -26,8 +26,8 @@ public class Test1 {
 //                    throw new RuntimeException("任务队列已满");
                     //5.让调用者自己执行任务
                     task.run();
-
                 });
+
         for (int i = 0; i < 3; i++) {
             int id = i;
             pool.execute(()->{
@@ -38,9 +38,7 @@ public class Test1 {
                 }
                 log.info("执行任务"+id);
             });
-            
         }
-        
     }
 
 }
@@ -78,6 +76,7 @@ class ThreadPool {
                 Worker worker = new Worker(task);
                 log.info("创建线程执行任务"+worker+ "  task: "+ task);
                 workers.add(worker);//添加到线程集合
+
                 worker.start();
             }else {
 //                taskQueue.put(task);
@@ -109,8 +108,8 @@ class ThreadPool {
 //            while(task != null || (task = taskQueue.take()) != null){
             while(task != null || (task = taskQueue.poll(timeout, unit)) != null){
                 try{
-                    log.info("worker执行任务..."+task);
-                    task.run();
+                    log.info("worker执行任务..." + task);
+                    task.run();//执行任务
                 }catch (Exception e){
                     e.printStackTrace();
                 }finally {
@@ -173,7 +172,7 @@ class BlockingQueue<T> {
                 }
             }
             T t = queue.removeFirst();//从队首取出元素
-            fullWaitSet.signal(); //唤醒一个阻塞的生产者
+            fullWaitSet.signal(); // 唤醒一个阻塞的生产者
             return t;
         }finally {
             lock.unlock();
@@ -271,6 +270,7 @@ class BlockingQueue<T> {
         }finally {
             lock.unlock();
         }
-
     }
+
+
 }
